@@ -1,8 +1,13 @@
 /**
  * @providesModule react-native-device-info
  */
+import { Platform, NativeModules } from 'react-native';
 
-var RNDeviceInfo = require('react-native').NativeModules.RNDeviceInfo;
+var RNDeviceInfo = NativeModules.RNDeviceInfo;
+
+if (!RNDeviceInfo && Platform.OS === 'web') {
+  RNDeviceInfo = require('./web');
+}
 
 module.exports = {
   getUniqueID: function() {
@@ -44,6 +49,9 @@ module.exports = {
   getBundleId: function() {
     return RNDeviceInfo.bundleId;
   },
+  getApplicationName: function() {
+    return RNDeviceInfo.appName;
+  },
   getBuildNumber: function() {
     return RNDeviceInfo.buildNumber;
   },
@@ -68,6 +76,9 @@ module.exports = {
   getTimezone: function() {
     return RNDeviceInfo.timezone;
   },
+  getFontScale: function() {
+    return RNDeviceInfo.fontScale;
+  },
   isEmulator: function() {
     return RNDeviceInfo.isEmulator;
   },
@@ -77,11 +88,14 @@ module.exports = {
   is24Hour: function() {
     return RNDeviceInfo.is24Hour;
   },
-  isPinOrFingerprintSet: function () {
+  isPinOrFingerprintSet: function() {
     return RNDeviceInfo.isPinOrFingerprintSet;
   },
   getFirstInstallTime: function() {
     return RNDeviceInfo.firstInstallTime;
+  },
+  getInstallReferrer: function() {
+    return RNDeviceInfo.installReferrer;
   },
   getLastUpdateTime: function() {
     return RNDeviceInfo.lastUpdateTime;
@@ -91,5 +105,20 @@ module.exports = {
   },
   getCarrier: function() {
     return RNDeviceInfo.carrier;
+  },
+  getTotalMemory: function() {
+    return RNDeviceInfo.totalMemory;
+  },
+  getMaxMemory: function() {
+    return RNDeviceInfo.maxMemory;
+  },
+  getTotalDiskCapacity: function() {
+    return RNDeviceInfo.totalDiskCapacity;
+  },
+  getFreeDiskStorage: function() {
+    return RNDeviceInfo.freeDiskStorage;
+  },
+  getBatteryLevel: function() {
+    return RNDeviceInfo.getBatteryLevel();
   },
 };
